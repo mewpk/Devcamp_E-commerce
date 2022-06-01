@@ -35,9 +35,11 @@ export default function ProductList() {
       key: "action",
       render: () => (
         <>
-          <Button type="primary" style={{ margin: "20px" }}>
+        <a href="">
+          <Button type="primary" style={{ margin: "20px" }} >
             Edit
           </Button>
+          </a>
           <Button type="primary" danger>
             Delete
           </Button>

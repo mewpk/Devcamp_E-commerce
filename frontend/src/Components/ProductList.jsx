@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { Table, Avatar, Button, Modal, Form, Input, Checkbox } from "antd";
 import { useSelector , useDispatch} from "react-redux";
 import "./Product.css";
 import {insertData} from "../Reducers/productReducer"
+import axios from "axios";
 
 export default function ProductList() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -71,6 +72,17 @@ export default function ProductList() {
       ),
     },
   ];
+
+//----------------------------Axios-------------------------------------------//
+useEffect(()=>{
+  const getData = async ()=>{
+    axios.get("http://localhost:3000/user",(req,res)=>{
+      console.log(res);
+    })
+  }
+  getData();
+},[])
+
 //------------------------------------------------------------------------------//
   return (
     <div style={{ width: "80%", margin: "50px auto" }}>

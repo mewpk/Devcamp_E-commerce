@@ -37,6 +37,9 @@ export const productReducer = createSlice({
             state.name = action.payload.name 
             state.stockleft = action.payload.stockleft
             state.category =  action.payload.category
+        },
+        editDat : (state,action)=>{
+            
         }
     }
 })

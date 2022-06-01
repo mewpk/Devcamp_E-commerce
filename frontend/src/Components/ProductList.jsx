@@ -11,7 +11,7 @@ export default function ProductList() {
   const onFinish = (values) => {
     console.log("Success:", values);
     setIsModalVisible(false);
-    useDispatch(insertData())
+    // useDispatch(insertData())
   };
 
   const onFinishFailed = (errorInfo) => {

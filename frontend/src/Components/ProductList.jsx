@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { Table, Avatar, Button, Modal, Form, Input, Checkbox } from "antd";
-import { useSelector , useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "./Product.css";
-import {insertData} from "../Reducers/productReducer"
-import axios from "axios";
+
 
 export default function ProductList() {
   const [isModalVisible, setIsModalVisible] = useState(false);
-// ---------------Create Button Submit ------------------//
+
+ 
+  // ---------------Create Button Submit ------------------//
   const onFinish = (values) => {
     console.log("Success:", values);
     setIsModalVisible(false);
@@ -18,7 +19,7 @@ export default function ProductList() {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
- // ---------------Modal ------------------//
+  // ---------------Modal ------------------//
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -26,10 +27,13 @@ export default function ProductList() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-// -------------------Redux --------------------//
+  // -------------------Redux --------------------//
   const data = useSelector((state) => state.product);
 
-// -------------------Table --------------------//
+ 
+  //----------------------------Axios-------------------------------------------//
+  
+ // -------------------Table --------------------//
   const columns = [
     {
       title: "Photo",
@@ -39,15 +43,14 @@ export default function ProductList() {
     },
     {
       title: "Product Name",
-
       key: "name",
-      render: (x) => <p>{x.name}</p>,
+      render: (x) => <p>{x.product_name}</p>,
     },
     {
       title: "Stock Left",
 
       key: "stockleft",
-      render: (x) => <p>{x.stockleft}</p>,
+      render: (x) => <p>{x.stock_left}</p>,
     },
     {
       title: "Category",
@@ -73,26 +76,21 @@ export default function ProductList() {
     },
   ];
 
-//----------------------------Axios-------------------------------------------//
-useEffect(()=>{
-  const getData = async ()=>{
-    axios.get("http://localhost:3000/user",(req,res)=>{
-      console.log(res);
-    })
-  }
-  getData();
-},[])
-
-//------------------------------------------------------------------------------//
+  //------------------------------------------------------------------------------//
   return (
     <div style={{ width: "80%", margin: "50px auto" }}>
       {/* -------------------------------Table -------------------------------- */}
-      <Table rowKey={ dt => dt.id} columns={columns} dataSource={data} pagination={false} />
+      <Table
+        rowKey={(dt) => dt.id}
+        columns={columns}
+        dataSource={data[0]}
+        pagination={false}
+      />
       {/* ------------------------------------------------------------------- */}
       <Button
         style={{
           display: "block",
-          margin: "20px 50px 0px auto",
+          margin: "20px 50px 100px auto",
           textAlign: "right",
         }}
         type="primary"
@@ -147,10 +145,7 @@ useEffect(()=>{
           >
             <Input />
           </Form.Item>
-          <Form.Item
-            label="Category"
-            name="category"
-          >
+          <Form.Item label="Category" name="category">
             <Input />
           </Form.Item>
           <Form.Item

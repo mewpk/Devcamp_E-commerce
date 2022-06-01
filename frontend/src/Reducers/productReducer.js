@@ -6,13 +6,14 @@ export const productReducer = createSlice({
     name : "product",
 
     //name State
-    initialState :[],
+    initialState :[
+
+
+    ],
     // Action Reducer
     reducers :{
         insertData : (state,action) =>{
-            state.name = action.payload.name 
-            state.stockleft = action.payload.stockleft
-            state.category =  action.payload.category
+            state.push(action.payload)
         },
         editDat : (state,action)=>{
             

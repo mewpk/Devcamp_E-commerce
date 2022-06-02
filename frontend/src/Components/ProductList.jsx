@@ -2,19 +2,42 @@ import React, { useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { Table, Avatar, Button, Modal, Form, Input, Checkbox } from "antd";
 import { useSelector, useDispatch } from "react-redux";
+import { insertData, initData } from "../Reducers/productReducer";
 import "./Product.css";
-
+import axios from "axios";
 
 export default function ProductList() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const dispatch = useDispatch();
 
- 
+  const data = useSelector((state) => state.product);
+
+  useEffect(() => {
+    const GetData = async () => {
+      const res = await axios.get("http://localhost:3000/user");
+      const data = res.data.data;
+      dispatch(initData(data));
+    };
+    GetData();
+  }, []);
   // ---------------Create Button Submit ------------------//
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const onFinish = async (values) => {
     setIsModalVisible(false);
-    // useDispatch(insertData())
+    const sendData = await axios.post("http://localhost:3000/user", values);
+    let newData = values;
+    newData.id = sendData.data.id;
+    dispatch(insertData(values));
   };
+
+  const delData = async (id) =>{
+    const data = await axios.delete(`http://localhost:3000/user/${id}`)
+    const GetData = async () => {
+      const res = await axios.get("http://localhost:3000/user");
+      const data = res.data.data;
+      dispatch(initData(data));
+    };
+    GetData();;
+  }
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -28,12 +51,10 @@ export default function ProductList() {
     setIsModalVisible(false);
   };
   // -------------------Redux --------------------//
-  const data = useSelector((state) => state.product);
 
- 
   //----------------------------Axios-------------------------------------------//
-  
- // -------------------Table --------------------//
+
+  // -------------------Table --------------------//
   const columns = [
     {
       title: "Photo",
@@ -61,14 +82,20 @@ export default function ProductList() {
     {
       title: "Action",
       key: "action",
-      render: () => (
+      render: (x) => (
         <>
           <a href="">
             <Button type="primary" style={{ margin: "20px" }}>
               Edit
             </Button>
           </a>
-          <Button type="primary" danger>
+          <Button
+            type="primary"
+            danger
+            onClick={() => {
+              delData(x.id)
+            }}
+          >
             Delete
           </Button>
         </>
@@ -83,7 +110,7 @@ export default function ProductList() {
       <Table
         rowKey={(dt) => dt.id}
         columns={columns}
-        dataSource={data[0]}
+        dataSource={data.data}
         pagination={false}
       />
       {/* ------------------------------------------------------------------- */}
@@ -98,6 +125,7 @@ export default function ProductList() {
       >
         Create
       </Button>
+
       {/* ----------------------------------Modal Create------------------------------- */}
       <Modal
         title="Create New Product"
@@ -122,7 +150,7 @@ export default function ProductList() {
         >
           <Form.Item
             label="Product Name"
-            name="name"
+            name="product_name"
             rules={[
               {
                 required: true,
@@ -135,7 +163,7 @@ export default function ProductList() {
 
           <Form.Item
             label="Stock Left"
-            name="stockleft"
+            name="stock_left"
             rules={[
               {
                 required: true,

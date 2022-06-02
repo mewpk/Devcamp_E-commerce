@@ -7,14 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 export default function Navbar() {
   const dispatch = useDispatch()
   useEffect(() => {
-
-  
     const GetData = async () => {
       const res = await axios.get("http://localhost:3000/user")
       const data = res.data.data
       await dispatch(insertData(data))
-      // await   console.log(data);
-      // console.log(res.data.data);
     };
     GetData() 
     

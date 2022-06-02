@@ -4,7 +4,6 @@ export const productReducer = createSlice({
 
     //name Reducer
     name : "product",
-
     //name State
     initialState :[
 

@@ -39,6 +39,7 @@ export default function ProductList() {
     GetData();;
   }
 
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -85,7 +86,11 @@ export default function ProductList() {
       render: (x) => (
         <>
           <a href="">
-            <Button type="primary" style={{ margin: "20px" }}>
+            <Button type="primary" style={{ margin: "20px" }}
+            onClick={()=>{
+
+
+            }}>
               Edit
             </Button>
           </a>
@@ -134,7 +139,70 @@ export default function ProductList() {
         footer={null}
       >
         <Form
-          name="basic"
+          name="Create"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Product Name"
+            name="product_name"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Product Name !",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Stock Left"
+            name="stock_left"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Stock Left!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item label="Category" name="category">
+            <Input />
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+      {/* ----------------------------------------------------------------------- */}
+      {/* ----------------------------------Modal Edit------------------------------- */}
+      <Modal
+        title="Edit Product"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <Form
+          name="Edit"
           labelCol={{
             span: 8,
           }}

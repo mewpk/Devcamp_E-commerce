@@ -14,7 +14,7 @@ export default function ProductList() {
 
   useEffect(() => {
     const GetData = async () => {
-      const res = await axios.get("http://localhost:3000/user");
+      const res = await axios.get("http://13.212.113.0:3000/user");
       const data = res.data.data;
       dispatch(initData(data));
     };
@@ -23,16 +23,16 @@ export default function ProductList() {
   // ---------------Create Button Submit ------------------//
   const onFinish = async (values) => {
     setIsModalVisible(false);
-    const sendData = await axios.post("http://localhost:3000/user", values);
+    const sendData = await axios.post("http://13.212.113.0:3000/user", values);
     let newData = values;
     newData.id = sendData.data.id;
     dispatch(insertData(values));
   };
 
   const delData = async (id) =>{
-    const data = await axios.delete(`http://localhost:3000/user/${id}`)
+    const data = await axios.delete(`http://13.212.113.0:3000/user/${id}`)
     const GetData = async () => {
-      const res = await axios.get("http://localhost:3000/user");
+      const res = await axios.get("http://13.212.113.0:3000/user");
       const data = res.data.data;
       dispatch(initData(data));
     };

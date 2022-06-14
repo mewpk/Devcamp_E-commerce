@@ -30,7 +30,7 @@ export default function ProductList() {
   };
 
   const delData = async (id) =>{
-    const data = await axios.delete(`http://13.212.113.0:3000/user/${id}`)
+    await axios.delete(`http://13.212.113.0:3000/user/${id}`)
     const GetData = async () => {
       const res = await axios.get("http://13.212.113.0:3000/user");
       const data = res.data.data;
@@ -61,7 +61,7 @@ export default function ProductList() {
       title: "Photo",
 
       key: "Photo",
-      render: (x) => <Avatar src={x.img} />,
+      render: (x) => <Avatar src={"https://picsum.photos/200/300"} />,
     },
     {
       title: "Product Name",

@@ -105,7 +105,7 @@ router.delete("/:id", async (req, res) => {
             const data = await connection.query(`delete from items where id = ${id};`);
 
             if (data) {
-
+                
                 res.json({
                     status: "successful",
                     id: id
